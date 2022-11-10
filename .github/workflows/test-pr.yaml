@@ -12,8 +12,7 @@ jobs:
         id: filter
         with:
           filters: |
-            color: ./**/color/**
-            hello: ./**/hello/**
+            cloud-native: ./**/cloud-native/**
 
   test:
     needs: [detect-changes]
