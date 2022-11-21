@@ -9,12 +9,12 @@
             "type": "string",
             "proposals": [
                 "latest",
+                "1.25",
                 "1.24",
-                "1.23",
-                "1.22"
+                "1.23"
             ],
             "default": "latest",
-            "description": "Select or enter a Kubernetes version to install"
+            "description": "Select or enter a kubectl version to install"
         },
         "helm": {
             "type": "string",
@@ -30,9 +30,9 @@
             "proposals": [
                 "latest",
                 "none",
-                "0.0.20",
-                "0.0.19",
-                "0.0.18"
+                "0.0.24",
+                "0.0.23",
+                "0.0.22"
             ],
             "default": "none",
             "description": "Select or enter a kubelogin version to install"
@@ -54,12 +54,12 @@
             "proposals": [
                 "latest",
                 "none",
+                "0.36.0",
                 "0.35.0",
-                "0.34.0",
-                "0.33.0"
+                "0.34.0"
             ],
             "default": "none",
-            "description": "Select or enter a Flux version to install"
+            "description": "Select or enter a Flux v2 cli version to install"
         }
     },
     "installsAfter": [
