@@ -20,12 +20,12 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        templates: ${{ fromJSON(needs.detect-changes.outputs.templates) }}
+        features: ${{ fromJSON(needs.detect-changes.outputs.features) }}
     steps:
       - uses: actions/checkout@v2
 
-      - name: Smoke test for '${{ matrix.templates }}'
+      - name: Smoke test for '${{ matrix.features }}'
         id: smoke_test
         uses: ./.github/actions/smoke-test
         with:
-          template: "${{ matrix.templates }}"
+          template: "${{ matrix.features }}"
