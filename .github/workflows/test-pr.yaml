@@ -28,4 +28,4 @@ jobs:
         id: smoke_test
         uses: ./.github/actions/smoke-test
         with:
-          template: "${{ matrix.features }}"
+          features: "${{ matrix.features }}"
