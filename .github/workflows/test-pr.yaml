@@ -6,7 +6,7 @@ jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      templates: ${{ steps.filter.outputs.changes }}
+      features: ${{ steps.filter.outputs.changes }}
     steps:
       - uses: dorny/paths-filter@v2
         id: filter
