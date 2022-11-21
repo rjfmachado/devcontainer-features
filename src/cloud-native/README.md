@@ -7,7 +7,7 @@ Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects
 
 ```json
 "features": {
-    "ghcr.io/rjfmachado/cloud-native/cloud-native:1": {
+    "ghcr.io/rjfmachado/devcontainer-features/cloud-native:latest": {
         "version": "latest"
     }
 }
@@ -22,8 +22,6 @@ Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects
 | kubelogin | Select or enter a kubelogin version to install | string | none |
 | azwi | Select or enter a Azure AD Workload Identity (azwi) cli version to install | string | none |
 | flux | Select or enter a Flux version to install | string | none |
-
-
 
 ---
 
