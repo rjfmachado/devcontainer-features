@@ -1,23 +1,14 @@
 #!/usr/bin/env bash
-#-------------------------------------------------------------------------------------------------------------
-# Copyright (c) Microsoft Corporation. All rights reserved.
-# Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
-#-------------------------------------------------------------------------------------------------------------
-#
-# Docs: https://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/kubectl-helm.md
-# Maintainer: The VS Code and Codespaces Teams
-
 set -e
 
 # Clean up
 rm -rf /var/lib/apt/lists/*
 
-KUBECTL_VERSION="${KUBECTL:-"latest"}"
+KUBECTL_VERSION="${VERSION:-"latest"}"
 HELM_VERSION="${HELM:-"none"}"
 KUBELOGIN_VERSION="${KUBELOGIN:-"none"}"
 AZWI_VERSION="${AZWI:-"none"}"
 FLUX_VERSION="${FLUX:-"none"}"
-
 
 KUBECTL_SHA256="${KUBECTL_SHA256:-"automatic"}"
 HELM_SHA256="${HELM_SHA256:-"automatic"}"
@@ -235,7 +226,7 @@ if [ "${KUBELOGIN_VERSION}" != "none" ] && ! type kubelogin > /dev/null 2>&1; th
         KUBELOGIN_VERSION="v${KUBELOGIN_VERSION}"
     fi
 
-    curl -sSL -o /tmp/kubelogin-linux-amd64.zip "https://github.com/Azure/kubelogin/releases/download/${KUBELOGIN_VERSION}/kubelogin-linux-${architecture}.zip" 
+    curl -sSL -o /tmp/kubelogin-linux-amd64.zip "https://github.com/Azure/kubelogin/releases/download/${KUBELOGIN_VERSION}/kubelogin-linux-${architecture}.zip"
 
     if [ "$KUBELOGIN_SHA256" = "automatic" ]; then
         KUBELOGIN_SHA256="$(curl -sSL "https://github.com/Azure/kubelogin/releases/download/${KUBELOGIN_VERSION}/kubelogin-linux-${architecture}.zip.sha256" | cut -f1 -d' ')"
@@ -266,7 +257,7 @@ if [ "${AZWI_VERSION}" != "none" ] && ! type azwi > /dev/null 2>&1; then
         AZWI_VERSION="v${AZWI_VERSION}"
     fi
 
-    curl -sSL -o /tmp/azwi-${AZWI_VERSION}-linux-${architecture}.tar.gz "https://github.com/Azure/azure-workload-identity/releases/download/${AZWI_VERSION}/azwi-${AZWI_VERSION}-linux-${architecture}.tar.gz" 
+    curl -sSL -o /tmp/azwi-${AZWI_VERSION}-linux-${architecture}.tar.gz "https://github.com/Azure/azure-workload-identity/releases/download/${AZWI_VERSION}/azwi-${AZWI_VERSION}-linux-${architecture}.tar.gz"
 
     if [ "$AZWI_SHA256" = "automatic" ]; then
         AZWI_SHA256="$(curl -sSL "https://github.com/Azure/azure-workload-identity/releases/download/${AZWI_VERSION}/sha256sums.txt" | grep azwi-${AZWI_VERSION}-linux-${architecture}.tar.gz | cut -f1 -d' ')"
@@ -296,7 +287,7 @@ if [ "${FLUX_VERSION}" != "none" ] && ! type flux > /dev/null 2>&1; then
 
     FLUX_VERSION="${FLUX_VERSION}"
 
-    curl -sSL -o /tmp/flux_${FLUX_VERSION}_linux_${architecture}.tar.gz "https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_${architecture}.tar.gz" 
+    curl -sSL -o /tmp/flux_${FLUX_VERSION}_linux_${architecture}.tar.gz "https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_linux_${architecture}.tar.gz"
 
     if [ "$FLUX_SHA256" = "automatic" ]; then
         FLUX_SHA256="$(curl -sSL "https://github.com/fluxcd/flux2/releases/download/v${FLUX_VERSION}/flux_${FLUX_VERSION}_checksums.txt" | grep flux_${FLUX_VERSION}_linux_${architecture}.tar.gz | cut -f1 -d' ')"

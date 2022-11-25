@@ -5,7 +5,7 @@
     "documentationURL": "https://github.com/rjfmachado/devcontainer-features/tree/main/src/cloud-native",
     "description": "Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects latest versions and installs needed dependencies.",
     "options": {
-        "kubectl": {
+        "version": {
             "type": "string",
             "proposals": [
                 "latest",
