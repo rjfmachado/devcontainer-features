@@ -5,9 +5,6 @@ A Visual Studio code devcontainer with a collection of tools to support Cloud Na
 Installs latest version of:
 
 * [kubectl](https://kubernetes.io/docs/tasks/tools/)
-
-and optionally:
-
 * [Helm](https://github.com/helm/helm/releases)
 * [kubelogin](https://github.com/Azure/kubelogin/releases)
 * [azwi](https://github.com/Azure/azure-workload-identity/releases)
