@@ -5,10 +5,10 @@ set -e
 rm -rf /var/lib/apt/lists/*
 
 KUBECTL_VERSION="${VERSION:-"latest"}"
-HELM_VERSION="${HELM:-"none"}"
-KUBELOGIN_VERSION="${KUBELOGIN:-"none"}"
-AZWI_VERSION="${AZWI:-"none"}"
-FLUX_VERSION="${FLUX:-"none"}"
+HELM_VERSION="${HELM:-"latest"}"
+KUBELOGIN_VERSION="${KUBELOGIN:-"latest"}"
+AZWI_VERSION="${AZWI:-"latest"}"
+FLUX_VERSION="${FLUX:-"latest"}"
 
 KUBECTL_SHA256="${KUBECTL_SHA256:-"automatic"}"
 HELM_SHA256="${HELM_SHA256:-"automatic"}"

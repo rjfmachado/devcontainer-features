@@ -4,64 +4,7 @@
     "name": "Cloud Native development environment tools",
     "documentationURL": "https://github.com/rjfmachado/devcontainer-features/tree/main/src/cloud-native",
     "description": "Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects latest versions and installs needed dependencies.",
-    "options": {
-        "version": {
-            "type": "string",
-            "proposals": [
-                "latest",
-                "1.25",
-                "1.24",
-                "1.23"
-            ],
-            "default": "latest",
-            "description": "Select or enter a kubectl version to install"
-        },
-        "helm": {
-            "type": "string",
-            "proposals": [
-                "latest",
-                "none"
-            ],
-            "default": "none",
-            "description": "Select or enter a Helm version to install"
-        },
-        "kubelogin": {
-            "type": "string",
-            "proposals": [
-                "latest",
-                "none",
-                "0.0.24",
-                "0.0.23",
-                "0.0.22"
-            ],
-            "default": "none",
-            "description": "Select or enter a kubelogin version to install"
-        },
-        "azwi": {
-            "type": "string",
-            "proposals": [
-                "latest",
-                "none",
-                "0.14.0",
-                "0.13.0",
-                "0.12.0"
-            ],
-            "default": "none",
-            "description": "Select or enter a Azure AD Workload Identity (azwi) cli version to install"
-        },
-        "flux": {
-            "type": "string",
-            "proposals": [
-                "latest",
-                "none",
-                "0.36.0",
-                "0.35.0",
-                "0.34.0"
-            ],
-            "default": "none",
-            "description": "Select or enter a Flux v2 cli version to install"
-        }
-    },
+    "options": {},
     "installsAfter": [
         "ghcr.io/devcontainers/features/common-utils"
     ]
