@@ -120,25 +120,33 @@ case $architecture in
 esac
 
 # Install the kubectl, verify checksum
-echo "Downloading kubectl..."
-if [ "${KUBECTL_VERSION}" = "latest" ] || [ "${KUBECTL_VERSION}" = "lts" ] || [ "${KUBECTL_VERSION}" = "current" ] || [ "${KUBECTL_VERSION}" = "stable" ]; then
-    KUBECTL_VERSION="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
+if [ "${KUBECTL_VERSION}" != "none" ] && ! type kubectl > /dev/null 2>&1; then
+    echo "Downloading kubectl..."
+    if [ "${KUBECTL_VERSION}" = "latest" ] || [ "${KUBECTL_VERSION}" = "lts" ] || [ "${KUBECTL_VERSION}" = "current" ] || [ "${KUBECTL_VERSION}" = "stable" ]; then
+        KUBECTL_VERSION="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
+    else
+        find_version_from_git_tags KUBECTL_VERSION https://github.com/kubernetes/kubernetes
+    fi
+    if [ "${KUBECTL_VERSION::1}" != 'v' ]; then
+        KUBECTL_VERSION="v${KUBECTL_VERSION}"
+    fi
+    curl -sSL -o /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl"
+    chmod 0755 /usr/local/bin/kubectl
+    if [ "$KUBECTL_SHA256" = "automatic" ]; then
+        KUBECTL_SHA256="$(curl -sSL "https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl.sha256")"
+    fi
+    ([ "${KUBECTL_SHA256}" = "dev-mode" ] || (echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c -))
+    if ! type kubectl > /dev/null 2>&1; then
+        echo '(!) kubectl installation failed!'
+        exit 1
+    fi
 else
-    find_version_from_git_tags KUBECTL_VERSION https://github.com/kubernetes/kubernetes
-fi
-if [ "${KUBECTL_VERSION::1}" != 'v' ]; then
-    KUBECTL_VERSION="v${KUBECTL_VERSION}"
-fi
-curl -sSL -o /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl"
-chmod 0755 /usr/local/bin/kubectl
-if [ "$KUBECTL_SHA256" = "automatic" ]; then
-    KUBECTL_SHA256="$(curl -sSL "https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl.sha256")"
-fi
-([ "${KUBECTL_SHA256}" = "dev-mode" ] || (echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c -))
-if ! type kubectl > /dev/null 2>&1; then
-    echo '(!) kubectl installation failed!'
-    exit 1
-fi
+    if ! type kubectl > /dev/null 2>&1; then
+        echo "Skipping kubectl."
+    else
+        echo "Kubectl already instaled"
+    fi
+fi    
 
 # kubectl bash completion
 kubectl completion bash > /etc/bash_completion.d/kubectl
