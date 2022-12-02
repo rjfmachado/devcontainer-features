@@ -2,7 +2,7 @@
 
 A Visual Studio code devcontainer with a collection of tools to support Cloud Native development environments.
 
-Installs latest version of:
+Installs the following command line utilities:
 
 * [kubectl](https://kubernetes.io/docs/tasks/tools/)
 * [Helm](https://github.com/helm/helm/releases)
