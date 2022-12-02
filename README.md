@@ -9,7 +9,7 @@ Installs the following command line utilities:
 * [kubelogin](https://github.com/Azure/kubelogin/releases)
 * [azwi](https://github.com/Azure/azure-workload-identity/releases)
 * [flux](https://github.com/fluxcd/flux2/releases)
-* [Cilium cli](https://github.com/cilium/cilium-cli/releases)
+* [Cilium](https://github.com/cilium/cilium-cli/releases)
 
 Auto-detects latest versions and installs needed dependencies.
 
