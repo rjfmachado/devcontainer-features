@@ -51,22 +51,6 @@ if [ "$USERNAME" = "root" ]; then
     USERHOME="/root"
 fi
 
-
-# Get central common setting
-# get_common_setting() {
-#     if [ "${common_settings_file_loaded}" != "true" ]; then
-#         curl -sfL "https://aka.ms/vscode-dev-containers/script-library/settings.env" 2>/dev/null -o /tmp/vsdc-settings.env || echo "Could not download settings file. Skipping."
-#         common_settings_file_loaded=true
-#     fi
-#     if [ -f "/tmp/vsdc-settings.env" ]; then
-#         local multi_line=""
-#         if [ "$2" = "true" ]; then multi_line="-z"; fi
-#         local result="$(grep ${multi_line} -oP "$1=\"?\K[^\"]+" /tmp/vsdc-settings.env | tr -d '\0')"
-#         if [ ! -z "${result}" ]; then declare -g $1="${result}"; fi
-#     fi
-#     echo "$1=${!1}"
-# }
-
 # Figure out correct version of a three part version number is not passed
 find_version_from_git_tags() {
     local variable_name=$1
@@ -136,25 +120,33 @@ case $architecture in
 esac
 
 # Install the kubectl, verify checksum
-echo "Downloading kubectl..."
-if [ "${KUBECTL_VERSION}" = "latest" ] || [ "${KUBECTL_VERSION}" = "lts" ] || [ "${KUBECTL_VERSION}" = "current" ] || [ "${KUBECTL_VERSION}" = "stable" ]; then
-    KUBECTL_VERSION="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
+if [ "${KUBECTL_VERSION}" != "none" ] && ! type kubectl > /dev/null 2>&1; then
+    echo "Downloading kubectl..."
+    if [ "${KUBECTL_VERSION}" = "latest" ] || [ "${KUBECTL_VERSION}" = "lts" ] || [ "${KUBECTL_VERSION}" = "current" ] || [ "${KUBECTL_VERSION}" = "stable" ]; then
+        KUBECTL_VERSION="$(curl -sSL https://dl.k8s.io/release/stable.txt)"
+    else
+        find_version_from_git_tags KUBECTL_VERSION https://github.com/kubernetes/kubernetes
+    fi
+    if [ "${KUBECTL_VERSION::1}" != 'v' ]; then
+        KUBECTL_VERSION="v${KUBECTL_VERSION}"
+    fi
+    curl -sSL -o /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl"
+    chmod 0755 /usr/local/bin/kubectl
+    if [ "$KUBECTL_SHA256" = "automatic" ]; then
+        KUBECTL_SHA256="$(curl -sSL "https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl.sha256")"
+    fi
+    ([ "${KUBECTL_SHA256}" = "dev-mode" ] || (echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c -))
+    if ! type kubectl > /dev/null 2>&1; then
+        echo '(!) kubectl installation failed!'
+        exit 1
+    fi
 else
-    find_version_from_git_tags KUBECTL_VERSION https://github.com/kubernetes/kubernetes
-fi
-if [ "${KUBECTL_VERSION::1}" != 'v' ]; then
-    KUBECTL_VERSION="v${KUBECTL_VERSION}"
-fi
-curl -sSL -o /usr/local/bin/kubectl "https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl"
-chmod 0755 /usr/local/bin/kubectl
-if [ "$KUBECTL_SHA256" = "automatic" ]; then
-    KUBECTL_SHA256="$(curl -sSL "https://dl.k8s.io/${KUBECTL_VERSION}/bin/linux/${architecture}/kubectl.sha256")"
-fi
-([ "${KUBECTL_SHA256}" = "dev-mode" ] || (echo "${KUBECTL_SHA256} */usr/local/bin/kubectl" | sha256sum -c -))
-if ! type kubectl > /dev/null 2>&1; then
-    echo '(!) kubectl installation failed!'
-    exit 1
-fi
+    if ! type kubectl > /dev/null 2>&1; then
+        echo "Skipping kubectl."
+    else
+        echo "Kubectl already instaled"
+    fi
+fi    
 
 # kubectl bash completion
 kubectl completion bash > /etc/bash_completion.d/kubectl
@@ -181,8 +173,6 @@ if [ "${HELM_VERSION}" != "none" ] && ! type helm > /dev/null 2>&1; then
     export GNUPGHOME="/tmp/helm/gnupg"
     mkdir -p "${GNUPGHOME}"
     chmod 700 ${GNUPGHOME}
-    # get_common_setting HELM_GPG_KEYS_URI
-    # get_common_setting GPG_KEY_SERVERS true
     curl -sSL "${HELM_GPG_KEYS_URI}" -o /tmp/helm/KEYS
     echo -e "disable-ipv6\n${GPG_KEY_SERVERS}" > ${GNUPGHOME}/dirmngr.conf
     gpg -q --import "/tmp/helm/KEYS"
