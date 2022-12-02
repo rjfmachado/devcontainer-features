@@ -16,7 +16,7 @@ Auto-detects latest versions and installs needed dependencies.
 ## Usage
 
 
-```json
+```
 "features": {
     "ghcr.io/rjfmachado/devcontainer-features/cloud-native:1": {
         "kubectl": "latest",
