@@ -15,7 +15,6 @@ Auto-detects latest versions and installs needed dependencies.
 
 ## Usage
 
-
 ```
 "features": {
     "ghcr.io/rjfmachado/devcontainer-features/cloud-native:1": {
@@ -25,4 +24,3 @@ Auto-detects latest versions and installs needed dependencies.
     }
 }
 ```
-

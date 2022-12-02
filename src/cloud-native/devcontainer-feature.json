@@ -1,6 +1,6 @@
 {
     "id": "cloud-native",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "name": "Cloud Native development environment tools",
     "documentationURL": "https://github.com/rjfmachado/devcontainer-features/tree/main/src/cloud-native",
     "description": "Installs latest version of kubectl, Helm, kubelogin, azwi, flux and cilium cli. Auto-detects latest versions and installs needed dependencies.",
@@ -22,7 +22,7 @@
                 "latest",
                 "none"
             ],
-            "default": "none",
+            "default": "latest",
             "description": "Select or enter a Helm version to install"
         },
         "kubelogin": {
@@ -34,7 +34,7 @@
                 "0.0.23",
                 "0.0.22"
             ],
-            "default": "none",
+            "default": "latest",
             "description": "Select or enter a kubelogin version to install"
         },
         "azwi": {
@@ -46,7 +46,7 @@
                 "0.13.0",
                 "0.12.0"
             ],
-            "default": "none",
+            "default": "latest",
             "description": "Select or enter a Azure AD Workload Identity (azwi) cli version to install"
         },
         "flux": {
@@ -58,7 +58,7 @@
                 "0.35.0",
                 "0.34.0"
             ],
-            "default": "none",
+            "default": "latest",
             "description": "Select or enter a Flux v2 cli version to install"
         },
         "cilium": {
@@ -70,7 +70,7 @@
                 "0.12.10",
                 "0.12.9"
             ],
-            "default": "none",
+            "default": "latest",
             "description": "Select or enter a Cilium cli version to install"
         }
     },
