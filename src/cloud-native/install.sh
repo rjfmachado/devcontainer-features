@@ -4,7 +4,7 @@ set -e
 # Clean up
 rm -rf /var/lib/apt/lists/*
 
-KUBECTL_VERSION="${VERSION:-"latest"}"
+KUBECTL_VERSION="${KUBECTL:-"latest"}"
 HELM_VERSION="${HELM:-"latest"}"
 KUBELOGIN_VERSION="${KUBELOGIN:-"latest"}"
 AZWI_VERSION="${AZWI:-"latest"}"
@@ -146,7 +146,7 @@ else
     else
         echo "Kubectl already instaled"
     fi
-fi    
+fi
 
 # kubectl bash completion
 kubectl completion bash > /etc/bash_completion.d/kubectl
