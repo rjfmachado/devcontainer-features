@@ -181,8 +181,8 @@ if [ "${HELM_VERSION}" != "none" ] && ! type helm > /dev/null 2>&1; then
     export GNUPGHOME="/tmp/helm/gnupg"
     mkdir -p "${GNUPGHOME}"
     chmod 700 ${GNUPGHOME}
-    get_common_setting HELM_GPG_KEYS_URI
-    get_common_setting GPG_KEY_SERVERS true
+    # get_common_setting HELM_GPG_KEYS_URI
+    # get_common_setting GPG_KEY_SERVERS true
     curl -sSL "${HELM_GPG_KEYS_URI}" -o /tmp/helm/KEYS
     echo -e "disable-ipv6\n${GPG_KEY_SERVERS}" > ${GNUPGHOME}/dirmngr.conf
     gpg -q --import "/tmp/helm/KEYS"
