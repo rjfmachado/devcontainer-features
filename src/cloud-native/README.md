@@ -1,7 +1,7 @@
 
 # Cloud Native development environment tools (cloud-native)
 
-Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects latest versions and installs needed dependencies.
+Installs latest version of kubectl, Helm, kubelogin, azwi, flux and cilium cli. Auto-detects latest versions and installs needed dependencies.
 
 ## Example Usage
 
