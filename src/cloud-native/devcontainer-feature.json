@@ -1,9 +1,9 @@
 {
     "id": "cloud-native",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "name": "Cloud Native development environment tools",
     "documentationURL": "https://github.com/rjfmachado/devcontainer-features/tree/main/src/cloud-native",
-    "description": "Installs latest version of kubectl, Helm, kubelogin, azwi and flux. Auto-detects latest versions and installs needed dependencies.",
+    "description": "Installs latest version of kubectl, Helm, kubelogin, azwi, flux and cilium cli. Auto-detects latest versions and installs needed dependencies.",
     "options": {},
     "installsAfter": [
         "ghcr.io/devcontainers/features/common-utils"

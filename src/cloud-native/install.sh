@@ -9,12 +9,14 @@ HELM_VERSION="${HELM:-"latest"}"
 KUBELOGIN_VERSION="${KUBELOGIN:-"latest"}"
 AZWI_VERSION="${AZWI:-"latest"}"
 FLUX_VERSION="${FLUX:-"latest"}"
+CILIUM_CLI_VERSION="${CILIUM_CLI:-"latest"}"
 
 KUBECTL_SHA256="${KUBECTL_SHA256:-"automatic"}"
 HELM_SHA256="${HELM_SHA256:-"automatic"}"
 KUBELOGIN_SHA256="${KUBELOGIN_SHA256:-"automatic"}"
 AZWI_SHA256="${AZWI_SHA256:-"automatic"}"
 FLUX_SHA256="${FLUX_SHA256:-"automatic"}"
+CILIUM_CLI_SHA256="${CILIUM_CLI_SHA256:-"automatic"}"
 USERNAME=${USERNAME:-"automatic"}
 
 HELM_GPG_KEYS_URI="https://raw.githubusercontent.com/helm/helm/main/KEYS"
@@ -306,6 +308,38 @@ else
         echo "Skipping flux."
     else
         echo "Flux already instaled"
+    fi
+fi
+
+# Install cilium cli, verify checksum
+if [ "${CILIUM_CLI_VERSION}" != "none" ] && ! type cilium > /dev/null 2>&1; then
+
+    echo "Downloading Cilium CLI..."
+
+    find_version_from_git_tags CILIUM_CLI_VERSION https://github.com/cilium/cilium-cli
+
+    CILIUM_CLI_VERSION="${CILIUM_CLI_VERSION}"
+
+    #https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${CLI_ARCH}.tar.gz{,.sha256sum}
+    curl -sSL -o /tmp/cilium-linux-${architecture}.tar.gz "https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${architecture}.tar.gz"
+
+    if [ "$CILIUM_CLI_SHA256" = "automatic" ]; then
+        CILIUM_CLI_SHA256="$(curl -sSL "https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-${architecture}.tar.gz.sha256sum" | cut -f1 -d' ')"
+        echo $CILIUM_CLI_SHA256
+    fi
+    ([ "${CILIUM_CLI_SHA256}" = "dev-mode" ] || (echo "${CILIUM_CLI_SHA256} */tmp/cilium-linux-${architecture}.tar.gz" | sha256sum -c -))
+    tar -xf /tmp/cilium-linux-${architecture}.tar.gz --directory /usr/local/bin/
+    chmod 0755 /usr/local/bin/cilium
+    rm /tmp/cilium-linux-${architecture}.tar.gz
+    if ! type cilium > /dev/null 2>&1; then
+        echo '(!) Cilium CLI installation failed!'
+        exit 1
+    fi
+else
+    if ! type cilium > /dev/null 2>&1; then
+        echo "Skipping Cilium CLI."
+    else
+        echo "Cilium CLI already instaled."
     fi
 fi
 
