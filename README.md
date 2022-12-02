@@ -24,3 +24,8 @@ Auto-detects latest versions and installs needed dependencies.
     }
 }
 ```
+
+## Contributors
+<a href="https://github.com/rjfmachado/devcontainer-features/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=rjfmachado/devcontainer-features" />
+</a>
