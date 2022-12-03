@@ -119,7 +119,7 @@ case $architecture in
     *) echo "(!) Architecture $architecture unsupported"; exit 1 ;;
 esac
 
-# Install the kubectl, verify checksum
+# Install kubectl, verify checksum
 if [ "${KUBECTL_VERSION}" != "none" ] && ! type kubectl > /dev/null 2>&1; then
     echo "Downloading kubectl..."
     if [ "${KUBECTL_VERSION}" = "latest" ] || [ "${KUBECTL_VERSION}" = "lts" ] || [ "${KUBECTL_VERSION}" = "current" ] || [ "${KUBECTL_VERSION}" = "stable" ]; then
@@ -148,14 +148,17 @@ else
     fi
 fi
 
-# kubectl bash completion
-kubectl completion bash > /etc/bash_completion.d/kubectl
+# If kubectl is installed, install completion
+if type kubectl > /dev/null 2>&1; then
+    # kubectl bash completion
+    kubectl completion bash > /etc/bash_completion.d/kubectl
 
-# kubectl zsh completion
-if [ -e "${USERHOME}}/.oh-my-zsh" ]; then
-    mkdir -p "${USERHOME}/.oh-my-zsh/completions"
-    kubectl completion zsh > "${USERHOME}/.oh-my-zsh/completions/_kubectl"
-    chown -R "${USERNAME}" "${USERHOME}/.oh-my-zsh"
+    # kubectl zsh completion
+    if [ -e "${USERHOME}}/.oh-my-zsh" ]; then
+        mkdir -p "${USERHOME}/.oh-my-zsh/completions"
+        kubectl completion zsh > "${USERHOME}/.oh-my-zsh/completions/_kubectl"
+        chown -R "${USERNAME}" "${USERHOME}/.oh-my-zsh"
+    fi
 fi
 
 # Install Helm, verify signature and checksum
@@ -208,7 +211,7 @@ else
     fi
 fi
 
-# Install the kubelogin, verify checksum
+# Install kubelogin, verify checksum
 if [ "${KUBELOGIN_VERSION}" != "none" ] && ! type kubelogin > /dev/null 2>&1; then
 
     echo "Downloading kubelogin..."
@@ -239,7 +242,7 @@ else
     fi
 fi
 
-# Install the az worload identity, verify checksum
+# Install az worload identity, verify checksum
 if [ "${AZWI_VERSION}" != "none" ] && ! type azwi > /dev/null 2>&1; then
 
     echo "Downloading azwi..."
@@ -270,7 +273,7 @@ else
     fi
 fi
 
-# Install the az worload identity, verify checksum
+# Install flux, verify checksum
 if [ "${FLUX_VERSION}" != "none" ] && ! type flux > /dev/null 2>&1; then
 
     echo "Downloading flux..."

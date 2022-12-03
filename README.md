@@ -1,6 +1,6 @@
 # cloud-native
 
-A Visual Studio code devcontainer with a collection of tools to support Cloud Native development environments.
+A Visual Studio code [dev container](https://containers.dev/) feature with a collection of tools to support Cloud Native development environments.
 
 Installs the following command line utilities:
 
@@ -15,7 +15,7 @@ Auto-detects latest versions and installs needed dependencies.
 
 ## Usage
 
-All the latest versions are installed by default. You can pin a specific version or specify latest or none if you wish to have the latest or skip the installation of any specific cli. Please see below for an example:
+All the latest versions are installed by default. You can pin a specific version or specify latest or none if you wish to have the latest version or skip the installation of any specific cli. Please see below for an example:
 
 ```
 "features": {
