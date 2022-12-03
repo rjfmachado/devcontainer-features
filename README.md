@@ -15,7 +15,7 @@ Auto-detects latest versions and installs needed dependencies.
 
 ## Usage
 
-All the latest versions are installed by default. You can pin a specific version or specify latest or none if you wish to have the latest or skip the installation of any specific cli. Please see below for an example:
+All the latest versions are installed by default. You can pin a specific version or specify latest or none if you wish to have the latest version or skip the installation of any specific cli. Please see below for an example:
 
 ```
 "features": {
