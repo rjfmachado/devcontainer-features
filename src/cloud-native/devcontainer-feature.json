@@ -1,6 +1,6 @@
 {
     "id": "cloud-native",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "name": "Cloud Native development environment tools",
     "documentationURL": "https://github.com/rjfmachado/devcontainer-features/tree/main/src/cloud-native",
     "description": "Installs latest version of kubectl, Helm, kubelogin, azwi, flux and cilium cli. Auto-detects latest versions and installs needed dependencies.",

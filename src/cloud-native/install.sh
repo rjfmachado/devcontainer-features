@@ -154,7 +154,7 @@ if type kubectl > /dev/null 2>&1; then
     kubectl completion bash > /etc/bash_completion.d/kubectl
 
     # kubectl zsh completion
-    if [ -e "${USERHOME}}/.oh-my-zsh" ]; then
+    if [ -e "${USERHOME}/.oh-my-zsh" ]; then
         mkdir -p "${USERHOME}/.oh-my-zsh/completions"
         kubectl completion zsh > "${USERHOME}/.oh-my-zsh/completions/_kubectl"
         chown -R "${USERNAME}" "${USERHOME}/.oh-my-zsh"
@@ -210,6 +210,13 @@ else
         echo "Helm already instaled"
     fi
 fi
+
+# If helm is installed, install completion
+if type helm > /dev/null 2>&1; then
+    # helm bash completion
+    helm completion bash > /etc/bash_completion.d/helm
+fi
+
 
 # Install kubelogin, verify checksum
 if [ "${KUBELOGIN_VERSION}" != "none" ] && ! type kubelogin > /dev/null 2>&1; then
@@ -304,6 +311,13 @@ else
     fi
 fi
 
+# If flux is installed, install completion
+if type flux > /dev/null 2>&1; then
+    # flux bash completion
+    flux completion bash > /etc/bash_completion.d/flux
+fi
+
+
 # Install cilium cli, verify checksum
 if [ "${CILIUM_VERSION}" != "none" ] && ! type cilium > /dev/null 2>&1; then
 
@@ -334,6 +348,13 @@ else
         echo "Cilium CLI already instaled."
     fi
 fi
+
+# If cilium is installed, install completion
+if type cilium > /dev/null 2>&1; then
+    # cilium bash completion
+    cilium completion bash > /etc/bash_completion.d/cilium
+fi
+
 
 if ! type docker > /dev/null 2>&1; then
     echo -e '\n(*) Warning: The docker command was not found.\n\nYou can use one of the following scripts to install it:\n\nhttps://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/docker-in-docker.md\n\nor\n\nhttps://github.com/microsoft/vscode-dev-containers/blob/main/script-library/docs/docker.md'
