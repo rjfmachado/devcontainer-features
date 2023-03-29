@@ -249,6 +249,12 @@ else
     fi
 fi
 
+# If kubelogin is installed, install completion
+if type kubelogin > /dev/null 2>&1; then
+    # kubelogin bash completion
+    kubelogin completion bash > /etc/bash_completion.d/kubelogin
+fi
+
 # Install az worload identity, verify checksum
 if [ "${AZWI_VERSION}" != "none" ] && ! type azwi > /dev/null 2>&1; then
 
